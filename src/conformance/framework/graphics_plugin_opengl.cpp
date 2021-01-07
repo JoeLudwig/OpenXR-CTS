@@ -835,7 +835,6 @@ namespace Conformance
 
     void OpenGLGraphicsPlugin::ShutdownDevice()
     {
-        MakeCurrent( true );
         if (m_swapchainFramebuffer != 0) {
             glDeleteFramebuffers(1, &m_swapchainFramebuffer);
         }
@@ -1023,7 +1022,6 @@ namespace Conformance
         REQUIRE(countOutput == swapchainImageVector.size());
         REQUIRE(ValidateStructVectorType(swapchainImageVector, XR_TYPE_SWAPCHAIN_IMAGE_OPENGL_KHR));
 
-        const_cast<OpenGLGraphicsPlugin *>(this)->MakeCurrent( true );
         for (const XrSwapchainImageOpenGLKHR& image : swapchainImageVector) {
             CHECK(glGetError() == GL_NO_ERROR);
 
@@ -1118,7 +1116,6 @@ namespace Conformance
         const GLsizei w = swapchainContext->createInfo.width;
         const GLsizei h = swapchainContext->createInfo.height;
 
-        MakeCurrent( true );
         if (swapchainContext->createInfo.arraySize > 1) {
             XRC_CHECK_THROW_GLCMD(glBindTexture(GL_TEXTURE_2D_ARRAY, colorTexture));
             for (GLint y = 0; y < h; ++y) {
@@ -1140,7 +1137,6 @@ namespace Conformance
     {
         auto swapchainContext = m_swapchainImageContextMap[colorSwapchainImage];
 
-        MakeCurrent( true );
         XRC_CHECK_THROW_GLCMD(glBindFramebuffer(GL_FRAMEBUFFER, m_swapchainFramebuffer));
 
         const uint32_t colorTexture = reinterpret_cast<const XrSwapchainImageOpenGLKHR*>(colorSwapchainImage)->image;
