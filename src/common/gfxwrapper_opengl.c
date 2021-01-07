@@ -1711,7 +1711,7 @@ bool ksGpuContext_CreateShared(ksGpuContext *context, const ksGpuContext *other,
 void ksGpuContext_Destroy(ksGpuContext *context) {
 #if defined(OS_WINDOWS)
     if (context->hGLRC) {
-        if ( ksGpuContext_CheckCurrent( context ) && !wglMakeCurrent(NULL, NULL)) {
+        if (!wglMakeCurrent(NULL, NULL)) {
             DWORD error = GetLastError();
             Error("Failed to release context error code (%d).", error);
         }
